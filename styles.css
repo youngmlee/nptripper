@@ -1,0 +1,12 @@
+body,
+html {
+  height: 100%;
+}
+
+.bg {
+  height: 100%;
+  background-image: url('images/np-bg2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

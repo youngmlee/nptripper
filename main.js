@@ -22,9 +22,10 @@ function initMap() {
   });
   kmlLayer.addListener('click', function(event) {
     var content = event.featureData.infoWindowHtml;
+    const $bg = document.querySelector('.testing')
     const $capture = document.getElementById('capture')
-    $capture.innerHTML = content
-    var parkName = $capture.innerText
+    $bg.innerHTML = content
+    var parkName = $bg.innerText
     parkFinder(parkName)
   });
 }
@@ -222,41 +223,38 @@ function cycleCar() {
 }
 
 function popCar(parkCode) {
-  const $capture = document.getElementById('capture')
-  const $row = document.querySelector('.row')
-  var parkName = $capture.innerText
-  $row.removeChild($capture)
-  createCar()
   var $carousel = document.querySelectorAll('.carousel-inner img')
   var foundObj = findObjByParkCode(parkCode, parkInfo)
   var parkSrc = foundObj.src
   for (var i = 0; i < $carousel.length; i++) {
     $carousel[i].setAttribute('src', parkSrc[i])
   }
-  $('.carousel').carousel('cycle')
+  $('.carousel').carousel()
+  cycleCar()
 }
 
 function createCar() {
   var $carExample = document.createElement('div')
-  $carExample.setAttribute('id', 'carouselTest')
+  $carExample.setAttribute('id', 'carousel')
   $carExample.setAttribute('class', 'carousel slide')
+  $carExample.setAttribute('data-ride', 'carousel')
   var $carIndicators = document.createElement('ol')
   $carIndicators.setAttribute('class', 'carousel-indicators')
   var $carExampleIndicatorsActive = document.createElement('li')
-  $carExampleIndicatorsActive.setAttribute('data-target', '#carouselTest')
+  $carExampleIndicatorsActive.setAttribute('data-target', '#carousel')
   $carExampleIndicatorsActive.setAttribute('data-slide-to', '0')
   $carExampleIndicatorsActive.setAttribute('class', 'active')
   var $carExampleIndicatorsTwo = document.createElement('li')
-  $carExampleIndicatorsTwo.setAttribute('data-target', '#carouselTest')
+  $carExampleIndicatorsTwo.setAttribute('data-target', '#carousel')
   $carExampleIndicatorsTwo.setAttribute('data-slide-to', '1')
   var $carExampleIndicatorsThree = document.createElement('li')
-  $carExampleIndicatorsThree.setAttribute('data-target', '#carouselTest')
+  $carExampleIndicatorsThree.setAttribute('data-target', '#carousel')
   $carExampleIndicatorsThree.setAttribute('data-slide-to', '2')
   var $carExampleIndicatorsFour = document.createElement('li')
-  $carExampleIndicatorsFour.setAttribute('data-target', '#carouselTest')
+  $carExampleIndicatorsFour.setAttribute('data-target', '#carousel')
   $carExampleIndicatorsFour.setAttribute('data-slide-to', '3')
   var $carExampleIndicatorsFive = document.createElement('li')
-  $carExampleIndicatorsFive.setAttribute('data-target', '#carouselTest')
+  $carExampleIndicatorsFive.setAttribute('data-target', '#carousel')
   $carExampleIndicatorsFive.setAttribute('data-slide-to', '4')
   var $carInner = document.createElement('div')
   $carInner.setAttribute('class', 'carousel-inner')
@@ -292,7 +290,7 @@ function createCar() {
   $carImgFive.setAttribute('alt', 'Fifth slide')
   var $carControlPrev = document.createElement('a')
   $carControlPrev.setAttribute('class', 'carousel-control-prev')
-  $carControlPrev.setAttribute('href', '#carouselTest')
+  $carControlPrev.setAttribute('href', '#carousel')
   $carControlPrev.setAttribute('role', 'button')
   $carControlPrev.setAttribute('data-slide', 'prev')
   var $carPrevSpan = document.createElement('span')
@@ -300,7 +298,7 @@ function createCar() {
   $carPrevSpan.setAttribute('aria-hidden', 'true')
   var $carControlNext = document.createElement('a')
   $carControlNext.setAttribute('class', 'carousel-control-next')
-  $carControlNext.setAttribute('href', '#carouselTest')
+  $carControlNext.setAttribute('href', '#carousel')
   $carControlNext.setAttribute('role', 'button')
   $carControlNext.setAttribute('data-slide', 'next')
   var $carNextSpan = document.createElement('span')
@@ -344,13 +342,9 @@ function createCar() {
 }
 
 function fetchDescription(parkCode) {
-  const url = 'https://developer.nps.gov/api/v0/parks?parkCode=' + parkCode
-  const $description = document.createElement('p')
-  $description.setAttribute('class', 'description')
-  const $capture = document.querySelector('#capture')
+  const $description = document.querySelector('.description')
   var foundObj = findObjByParkCode(parkCode, parkInfo)
   $description.innerText = foundObj.description
-  $capture.appendChild($description)
 }
 
 const parkInfo = [

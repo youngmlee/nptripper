@@ -1,0 +1,39 @@
+body,
+html {
+  height: 100%;
+}
+
+.bg {
+  height: 100%;
+  background-image: url('images/np-bg2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+h2 {
+  padding-top: 4%;
+  text-align: center;
+  color: #000;
+}
+
+.container {
+  max-width: 90vw;
+  padding-top: 8%;
+}
+
+#map {
+  height: 50vh;
+  overflow: hidden;
+  float: left;
+  border: thin solid #333;
+}
+
+#capture {
+  height: 50vh;
+  overflow: hidden;
+  float: left;
+  background-color: #ececfb;
+  border: thin solid #333;
+  border-left: none;
+}

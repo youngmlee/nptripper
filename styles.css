@@ -45,5 +45,6 @@ h2 {
 }
 
 .description {
+  padding-top: 8px;
   font-size: 0.8em;
 }

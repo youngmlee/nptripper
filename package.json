@@ -1,0 +1,28 @@
+{
+  "name": "nptripper",
+  "version": "1.0.0",
+  "description": "A web app for nature loving road trippers to plan their itinerary by reviewing suggested National Parks on their route.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youngmlee/nptripper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/youngmlee/nptripper/issues"
+  },
+  "homepage": "https://github.com/youngmlee/nptripper#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}

@@ -43,12 +43,12 @@ h2 {
 .d-block {
   padding-top: 10px;
   width: 100%;
-  height: 30vh;
+  height: 40vh;
 }
 
 .description {
   padding-top: 8px;
-  font-size: 1em;
+  font-size: 0.8em;
   font-family: 'Cinzel', sans-serif;
 }
 

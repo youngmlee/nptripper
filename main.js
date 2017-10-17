@@ -22,7 +22,7 @@ function initMap() {
   });
   kmlLayer.addListener('click', function(event) {
     var content = event.featureData.infoWindowHtml;
-    const $bg = document.querySelector('.testing')
+    const $bg = document.querySelector('.parkplaceholder')
     const $capture = document.getElementById('capture')
     $bg.innerHTML = content
     var parkName = $bg.innerText
@@ -658,7 +658,7 @@ const parkInfo = [
     parkCode: 'voya',
     src: ['images/voya/voya1.jpg', 'images/voya/voya2.jpg', 'images/voya/voya3.jpg', 'images/voya/voya4.jpg', 'images/voya/voya5.jpg'],
     LatLng: [ 48.4268554, -92.8465541 ],
-    description: "Voyaguers National Park, MN\n\nVoyageurs National Park lies within the heart of the North American Continent.  Here you can see and touch rocks half as old as the world, experience the life of a voyageur, immerse yourself in the sights and sounds of a boreal forest, view the dark skies, or ply the interconnected water routes."
+    description: "Voyageurs National Park, MN\n\nVoyageurs National Park lies within the heart of the North American Continent.  Here you can see and touch rocks half as old as the world, experience the life of a voyageur, immerse yourself in the sights and sounds of a boreal forest, view the dark skies, or ply the interconnected water routes."
   },
   {
     id: '39',

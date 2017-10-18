@@ -237,22 +237,33 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   const $formHolder = document.querySelector('.formholder')
   var formInfo = $formHolder.textContent
   var split = formInfo.split('&')
-  var origin = split[0]
-  var destination = split[1]
-  var waypoints = split[2]
+  var origin = split[0].replace(/%2C/g, ',')
+  var destination = split[1].replace(/%2C/g, ',')
+  var waypoints = split[2].replace(/%2C/g, ',')
   var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
   var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
-  var middleWay = waypoints.replace(/waypoints=/g, '').split('%20').join(' ')
-  var waypointsObj = {}
-  waypointsObj['location'] = middleWay
-  waypointsObj['stopover'] = true
-  var waypointsArr = []
-  waypointsArr.push(waypointsObj)
+  var wayArr = []
+  var finalWayArr = []
+  if (waypoints.length !== 10) {
+    var wayStrArr = waypoints.split('%3B')
+    for (let i = 0; i < wayStrArr.length; i++) {
+      var singleWaypoint = wayStrArr[i]
+      var cleanedWay = singleWaypoint.replace(/waypoints=/g, '').split('%20').join(' ')
+      wayArr.push(cleanedWay)
+    }
+    for (let i = 0; i < wayArr.length; i++) {
+      var newObj = new Object
+      newObj['location'] = wayArr[i]
+      newObj['stopover'] = true
+      finalWayArr.push(newObj)
+    }
+  }
   directionsService.route({
     origin: finalOrg,
     destination: finalDest,
-    waypoints: waypointsArr,
-    travelMode: 'DRIVING'
+    waypoints: finalWayArr,
+    travelMode: 'DRIVING',
+    optimizeWaypoints: true
   }, function(response, status) {
     if (status === 'OK') {
       directionsDisplay.setDirections(response);

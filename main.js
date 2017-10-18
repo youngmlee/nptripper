@@ -229,7 +229,10 @@ function popCar(parkCode) {
 
 function fetchDescription(parkCode) {
   const $description = document.querySelector('.description')
+  const $blockquote = document.querySelector('.blockquote')
+  $blockquote.innerHTML = ''
   var foundObj = findObjByParkCode(parkCode, parkInfo)
+  $description.innerText = ''
   $description.innerText = foundObj.description
 }
 
@@ -263,10 +266,14 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     destination: finalDest,
     waypoints: finalWayArr,
     travelMode: 'DRIVING',
+    avoidHighways: false,
+    avoidTolls: false,
     optimizeWaypoints: true
   }, function(response, status) {
     if (status === 'OK') {
       directionsDisplay.setDirections(response);
+    } else if (status === 'ZERO_RESULTS') {
+      window.alert('Try being more specific by adding the state\n(e.g. Death Valley, CA vs Death Valley)')
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -304,25 +311,132 @@ $('#myform').submit(function(e) {
   calculateAndDisplayRoute(directionsService, directionsDisplay)
 })
 
-function calcRoute() {
+function getOrgDest () {
+  const orgDestArr = []
+  const wpFinalArr = []
   const $formHolder = document.querySelector('.formholder')
   var formInfo = $formHolder.textContent
   var split = formInfo.split('&')
-  var origin = split[0]
-  var destination = split[1]
-  var waypoints = split[2]
+  var origin = split[0].replace(/%2C/g, ',')
+  var destination = split[1].replace(/%2C/g, ',')
+  var states = split[3].replace(/%2C/g, ',')
   var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
   var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
-  var finalWay = waypoints.replace(/waypoints=/g, '').split('%20').join(' ')
-  var request = {
-    origin: finalOrg,
-    destination: finalDest,
-    travelMode: 'DRIVING'
+  var wpArr = states.split('%3B')
+  for (let i = 0; i < wpArr.length; i++) {
+    var wp = wpArr[i].replace(/states=/g, '').split('%20').join(' ')
+    wpFinalArr.push(wp)
   }
-  console.log(finalOrg)
-  console.log(finalDest)
-  console.log(finalWay)
+  for (let j = 0; j < wpFinalArr.length; j++) {
+    orgDestArr.push(wpFinalArr[j])
+  }
+  return orgDestArr
 }
+
+function calcDistance() {
+  var service = new google.maps.DistanceMatrixService;
+  service.getDistanceMatrix({
+    origins: getOrgDest(),
+    destinations: [
+      'Great Smoky Mountains National Park',
+      'Grand Canyon National Park',
+      'Yosemite National Park',
+      'Rocky Mountain National Park',
+      'Zion National Park',
+      'Yellowstone National Park',
+      'Olympic National Park',
+      'Acadia National Park',
+      'Grand Teton National Park',
+      'Glacier National Park',
+      'Joshua Tree National Park',
+      'Cuyahoga Valley National Park',
+      'Bryce Canyon National Park',
+      'Arches National Park',
+      'Hot Springs National Park',
+      'Shenandoah National Park',
+      'Mount Rainier National Park',
+      'Death Valley, CA',
+      'Sequoia National Park',
+      'Capitol Reef National Park',
+      'Badlands National Park',
+      'Everglades, FL',
+      'Saguaro National Park',
+      'Canyonlands National Park',
+      'Crater Lake National Park'
+    ],
+    travelMode: 'DRIVING',
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false
+  }, function(response, status) {
+    if (status !== 'OK') {
+      alert('Error was: ' + status);
+    } else {
+      var originList = response.originAddresses;
+      var destinationList = response.destinationAddresses;
+      var outputDiv = document.querySelector('.distancetesting');
+      outputDiv.innerHTML = '';
+    }
+    for (var i = 0; i < originList.length; i++) {
+      var results = response.rows[i].elements;
+      for (var j = 0; j < results.length; j++) {
+        if (+results[j].distance.text.slice(0, -3) <= 200) {
+          outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] + ': ' + results[j].distance.text + ' in ' + results[j].duration.text + '<br>';
+          console.log(results[j].distance.text)
+        }
+      }
+    }
+  })
+}
+
+const topParks = [
+  'Great Smoky Mountains National Park',
+  'Grand Canyon National Park',
+  'Yosemite National Park',
+  'Rocky Mountain National Park',
+  'Zion National Park',
+  'Yellowstone National Park',
+  'Olympic National Park',
+  'Acadia National Park',
+  'Grand Teton National Park',
+  'Glacier National Park',
+  'Joshua Tree National Park',
+  'Cuyahoga Valley National Park',
+  'Bryce Canyon National Park',
+  'Arches National Park',
+  'Hot Springs National Park',
+  'Shenandoah National Park',
+  'Mount Rainier National Park',
+  'Death Valley, CA',
+  'Sequoia National Park',
+  'Capitol Reef National Park',
+  'Badlands National Park',
+  'Everglades, FL',
+  'Saguaro National Park',
+  'Canyonlands National Park',
+  'Crater Lake National Park'
+]
+
+const neglectedParks = [
+  'Theodore Roosevelt National Park',
+  'Petrified Forest National Park',
+  'Wind Cave National Park',
+  'Mammoth Cave National Park',
+  'Mesa Verde National Park',
+  'Redwood National Park',
+  'Lassen Volcanic National Park',
+  'Biscayne, FL',
+  'Carlsbad Caverns National Park',
+  'Great Sand Dunes National Park',
+  'Big Bend National Park',
+  'Voyageurs National Park',
+  'Black Canyon of the Gunnison National Park',
+  'Pinnacles National Park',
+  'Guadalupe Mountains National Park',
+  'Great Basin National Park',
+  'Congaree National Park',
+  'North Cascades National Park'
+]
 
 const parkInfo = [
   {

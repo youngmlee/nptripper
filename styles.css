@@ -3,6 +3,10 @@ html {
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .bg {
   height: 100%;
   background-image: url('images/np-bg2.jpg');
@@ -68,12 +72,6 @@ button {
   margin-top: auto;
   width: 10%;
   height: 5vh;
-}
-
-.blockquote {
-  padding-top: 2%;
-  font-size: 0.8em;
-  font-family: 'Bad Script', cursive;
 }
 
 #intro {

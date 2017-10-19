@@ -230,14 +230,13 @@ function popCar(parkCode) {
 function fetchDescription(parkCode) {
   const $description = document.querySelector('.description')
   const $blockquote = document.querySelector('.blockquote')
-  $blockquote.innerHTML = ''
   var foundObj = findObjByParkCode(parkCode, parkInfo)
   $description.innerText = ''
   $description.innerText = foundObj.description
   const $website = document.createElement('a')
   $website.setAttribute('href', foundObj.website)
   $website.setAttribute('target', '_blank')
-  $website.innerText = '  --  NPS Website'
+  $website.innerText = '  NPS Website  '
   $description.appendChild($website)
 }
 
@@ -314,6 +313,7 @@ $('#myform').submit(function(e) {
   directionsDisplay.setMap(newmap);
   directionsDisplay.setPanel($capture);
   calculateAndDisplayRoute(directionsService, directionsDisplay)
+  calcDistance()
 })
 
 function getOrgDest () {
@@ -359,9 +359,14 @@ function calcDistance() {
     for (var i = 0; i < originList.length; i++) {
       var results = response.rows[i].elements;
       for (var j = 0; j < results.length; j++) {
-        if (+results[j].distance.text.slice(0, -3) <= 200) {
-          outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] + ': ' + results[j].distance.text + ' in ' + results[j].duration.text + '<br>';
-          console.log(results[j].distance.text)
+        if (+results[j].distance.text.slice(0, -3) <= 50) {
+          outputDiv.innerHTML += 'The distance from ' + originList[i] + ' to ' + destinationList[j] + ' is a mere ' + results[j].distance.text + ' which will take approximately ' + results[j].duration.text + '. A stone\'s throw away!'+ '<br><br>';
+        } else if (+results[j].distance.text.slice(0, -3) <= 100) {
+          outputDiv.innerHTML += 'The distance from ' + originList[i] + ' to ' + destinationList[j] + ' is a mere ' + results[j].distance.text + ' which will take approximately ' + results[j].duration.text + '. A trifling distance!'+ '<br><br>';
+        } else if (+results[j].distance.text.slice(0, -3) <= 150) {
+          outputDiv.innerHTML += 'The distance from ' + originList[i] + ' to ' + destinationList[j] + ' is a mere ' + results[j].distance.text + ' which will take approximately ' + results[j].duration.text + '. Well worth the detour!'+ '<br><br>';
+        } else if (+results[j].distance.text.slice(0, -3) <= 200) {
+          outputDiv.innerHTML += 'The distance from ' + originList[i] + ' to ' + destinationList[j] + ' is a mere ' + results[j].distance.text + ' which will take approximately ' + results[j].duration.text + '. A real adventure!'+ '<br><br>';
         }
       }
     }

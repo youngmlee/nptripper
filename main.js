@@ -210,7 +210,7 @@ function parkFinder (parkName) {
 }
 
 function findObjByParkCode (parkCode, array) {
-  for (var i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     var arrObj = array[i]
     if (parkCode === arrObj.parkCode) {
       return arrObj
@@ -219,7 +219,7 @@ function findObjByParkCode (parkCode, array) {
 }
 
 function findObjByParkName (parkName, array) {
-  for (var i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     var arrObj = array[i]
     if (parkName === arrObj.name) {
       return arrObj
@@ -231,7 +231,7 @@ function popCar(parkCode) {
   var $carousel = document.querySelectorAll('.carousel-inner img')
   var foundObj = findObjByParkCode(parkCode, parkInfo)
   var parkSrc = foundObj.src
-  for (var i = 0; i < $carousel.length; i++) {
+  for (let i = 0; i < $carousel.length; i++) {
     $carousel[i].setAttribute('src', parkSrc[i])
   }
 }
@@ -367,7 +367,7 @@ function calcDistance() {
       var outputDiv = document.querySelector('.description');
       outputDiv.innerHTML = '';
     }
-    for (var i = 0; i < originList.length; i++) {
+    for (let i = 0; i < originList.length; i++) {
       var results = response.rows[i].elements;
       for (var j = 0; j < results.length; j++) {
         if (+results[j].distance.text.slice(0, -3) <= 50) {
@@ -385,7 +385,10 @@ function calcDistance() {
         }
       }
     }
-    createGalleries(parkList)
+    const uniqueArr = parkList.filter(function (elem, index, self) {
+      return index == self.indexOf(elem)
+    })
+    createGalleries(uniqueArr)
   })
 }
 

@@ -60,7 +60,7 @@ h2 {
   float: left;
   width: 100%;
   height: 20vh;
-  background-color: #88b04b;
+  background-color: #bae8ff;
 }
 
 .parkplaceholder,
@@ -69,7 +69,7 @@ h2 {
 }
 
 button {
-  margin-top: auto;
+  vertical-align: middle;
   width: 10%;
   height: 5vh;
 }

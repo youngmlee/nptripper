@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
     <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
     <link href="styles.css" rel="stylesheet" />
     <title>NpTripper</title>
   </head>
@@ -50,7 +52,7 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
-            <p class="description"></p>
+            <p class="description">Welcome to National Park Tripper - the road trip planner based around the amazing national parks of the United States!<br /><br />1. Click the map markers to see more information about a national park. (Green star markers indicate a top 10 yearly most-visited park)<br />2. Enter your origin,destination, and any waypoints you would like to stop by on your road trip to preview your route!<br />3. (Optional Adventure Checkpoints) - Choose strategic locations along your route to search for national parks to generate a preview!</p>
           </div>
         </div>
         <div class="col-12">
@@ -58,15 +60,22 @@
             <div class="form-row">
               <div class="col">
                 <label for="origin">Start</label>
-                <input type="text" id="origin" name="origin" class="form-control origin" placeholder="Starting city">
+                <input type="text" id="origin" name="origin" class="form-control origin" placeholder="Choose starting point">
               </div>
               <div class="col">
                 <label for="destination">End</label>
-                <input type="text" id="destinaton" name="destination" class="form-control destination" placeholder="Ending city">
+                <input type="text" id="destinaton" name="destination" class="form-control destination" placeholder="Choose destination">
               </div>
               <div class="col-7">
                 <label for="waypoints">Waypoints</label>
-                <input type="text" id="waypoints" name="waypoints" class="form-control waypoints" placeholder="Waypoints[add multiple separated by semicolon (e.g. Yosemite;Yellowstone;Zion)]">
+                <input type="text" id="waypoints" name="waypoints" class="form-control waypoints" placeholder="Waypoints[can add multiple separated by semicolon (e.g. Yosemite;Yellowstone;Zion)]">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-9">
+                <label id= "stateslabel" for="states">(Optional) Adventure Checkpoints! (max 4)</label>
+                <input type="text" id="states" name="states" class="form-control states" placeholder="Add up to four locations separated by semicolon to search for parks! (200 mile range)">
+                <small class="form-text text-muted">Tip: Choose locations close to national park markers.</small>
               </div>
               <button type="submit" id="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -82,6 +91,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuYK9U9zCqhyObzjdcOfdNrWzBJMSNSu0&callback=initMap">
     </script>
+    <script src="magnific-popup/jquery.magnific-popup.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

@@ -5,16 +5,18 @@ var src='http://gdurl.com/NiZm'
 
 $(document).ready(function() {
   console.log('Document ready!')
-   $('.carousel').carousel('cycle');
 });
 
 function initMap() {
+  var directionsDisplay = new google.maps.DirectionsRenderer
+  var directionsService = new google.maps.DirectionsService
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 39.5, lng: -98.35},
     zoom: 5,
     mapTypeId: 'hybrid'
   });
-
+  directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById('directions-panel'));
   var kmlLayer = new google.maps.KmlLayer(src, {
     suppressInfoWindows: true,
     preserveViewport: false,
@@ -22,7 +24,7 @@ function initMap() {
   });
   kmlLayer.addListener('click', function(event) {
     var content = event.featureData.infoWindowHtml;
-    const $bg = document.querySelector('.testing')
+    const $bg = document.querySelector('.parkplaceholder')
     const $capture = document.getElementById('capture')
     $bg.innerHTML = content
     var parkName = $bg.innerText
@@ -216,12 +218,6 @@ function findObjByParkCode (parkCode, array) {
   }
 }
 
-function cycleCar() {
-  $('.carousel').carousel({
-    interval: 2000
-  })
-}
-
 function popCar(parkCode) {
   var $carousel = document.querySelectorAll('.carousel-inner img')
   var foundObj = findObjByParkCode(parkCode, parkInfo)
@@ -229,122 +225,103 @@ function popCar(parkCode) {
   for (var i = 0; i < $carousel.length; i++) {
     $carousel[i].setAttribute('src', parkSrc[i])
   }
-  $('.carousel').carousel()
-  cycleCar()
-}
-
-function createCar() {
-  var $carExample = document.createElement('div')
-  $carExample.setAttribute('id', 'carousel')
-  $carExample.setAttribute('class', 'carousel slide')
-  $carExample.setAttribute('data-ride', 'carousel')
-  var $carIndicators = document.createElement('ol')
-  $carIndicators.setAttribute('class', 'carousel-indicators')
-  var $carExampleIndicatorsActive = document.createElement('li')
-  $carExampleIndicatorsActive.setAttribute('data-target', '#carousel')
-  $carExampleIndicatorsActive.setAttribute('data-slide-to', '0')
-  $carExampleIndicatorsActive.setAttribute('class', 'active')
-  var $carExampleIndicatorsTwo = document.createElement('li')
-  $carExampleIndicatorsTwo.setAttribute('data-target', '#carousel')
-  $carExampleIndicatorsTwo.setAttribute('data-slide-to', '1')
-  var $carExampleIndicatorsThree = document.createElement('li')
-  $carExampleIndicatorsThree.setAttribute('data-target', '#carousel')
-  $carExampleIndicatorsThree.setAttribute('data-slide-to', '2')
-  var $carExampleIndicatorsFour = document.createElement('li')
-  $carExampleIndicatorsFour.setAttribute('data-target', '#carousel')
-  $carExampleIndicatorsFour.setAttribute('data-slide-to', '3')
-  var $carExampleIndicatorsFive = document.createElement('li')
-  $carExampleIndicatorsFive.setAttribute('data-target', '#carousel')
-  $carExampleIndicatorsFive.setAttribute('data-slide-to', '4')
-  var $carInner = document.createElement('div')
-  $carInner.setAttribute('class', 'carousel-inner')
-  var $carItemActive = document.createElement('div')
-  $carItemActive.setAttribute('class', 'carousel-item-active')
-  var $carActiveImg = document.createElement('img')
-  $carActiveImg.setAttribute('class', 'd-block w-100')
-  $carActiveImg.setAttribute('src', '')
-  $carActiveImg.setAttribute('alt', 'First slide')
-  var $carItemTwo = document.createElement('div')
-  $carItemTwo.setAttribute('class', 'carousel-item')
-  var $carItemThree = document.createElement('div')
-  $carItemThree.setAttribute('class', 'carousel-item')
-  var $carItemFour = document.createElement('div')
-  $carItemFour.setAttribute('class', 'carousel-item')
-  var $carItemFive = document.createElement('div')
-  $carItemFive.setAttribute('class', 'carousel-item')
-  var $carImgTwo = document.createElement('img')
-  $carImgTwo.setAttribute('class', 'd-block w-100')
-  $carImgTwo.setAttribute('src', '')
-  $carImgTwo.setAttribute('alt', 'Second slide')
-  var $carImgThree = document.createElement('img')
-  $carImgThree.setAttribute('class', 'd-block w-100')
-  $carImgThree.setAttribute('src', '')
-  $carImgThree.setAttribute('alt', 'Third slide')
-  var $carImgFour = document.createElement('img')
-  $carImgFour.setAttribute('class', 'd-block w-100')
-  $carImgFour.setAttribute('src', '')
-  $carImgFour.setAttribute('alt', 'Fourth slide')
-  var $carImgFive = document.createElement('img')
-  $carImgFive.setAttribute('class', 'd-block w-100')
-  $carImgFive.setAttribute('src', '')
-  $carImgFive.setAttribute('alt', 'Fifth slide')
-  var $carControlPrev = document.createElement('a')
-  $carControlPrev.setAttribute('class', 'carousel-control-prev')
-  $carControlPrev.setAttribute('href', '#carousel')
-  $carControlPrev.setAttribute('role', 'button')
-  $carControlPrev.setAttribute('data-slide', 'prev')
-  var $carPrevSpan = document.createElement('span')
-  $carPrevSpan.setAttribute('class', 'carousel-control-prev-icon')
-  $carPrevSpan.setAttribute('aria-hidden', 'true')
-  var $carControlNext = document.createElement('a')
-  $carControlNext.setAttribute('class', 'carousel-control-next')
-  $carControlNext.setAttribute('href', '#carousel')
-  $carControlNext.setAttribute('role', 'button')
-  $carControlNext.setAttribute('data-slide', 'next')
-  var $carNextSpan = document.createElement('span')
-  $carNextSpan.setAttribute('class', 'carousel-control-next-icon')
-  $carNextSpan.setAttribute('aria-hidden', 'true')
-  var $srSpanPrev = document.createElement('span')
-  var $srSpanNext = document.createElement('span')
-  $srSpanPrev.setAttribute('class', 'sr-only')
-  $srSpanNext.setAttribute('class', 'sr-only')
-  $srSpanPrev.innerHTML = 'Previous'
-  $srSpanNext.innerHTML = 'Next'
-  $carItemActive.appendChild($carActiveImg)
-  $carInner.appendChild($carItemActive)
-  $carItemTwo.appendChild($carImgTwo)
-  $carInner.appendChild($carItemTwo)
-  $carItemThree.appendChild($carImgThree)
-  $carInner.appendChild($carItemThree)
-  $carItemFour.appendChild($carImgFour)
-  $carInner.appendChild($carItemFour)
-  $carItemFive.appendChild($carImgFive)
-  $carInner.appendChild($carItemFive)
-  $carIndicators.appendChild($carExampleIndicatorsActive)
-  $carIndicators.appendChild($carExampleIndicatorsTwo)
-  $carIndicators.appendChild($carExampleIndicatorsThree)
-  $carIndicators.appendChild($carExampleIndicatorsFour)
-  $carIndicators.appendChild($carExampleIndicatorsFive)
-  $carControlPrev.appendChild($carPrevSpan)
-  $carControlPrev.appendChild($srSpanPrev)
-  $carControlNext.appendChild($carNextSpan)
-  $carControlNext.appendChild($srSpanNext)
-  $carExample.appendChild($carIndicators)
-  $carExample.appendChild($carInner)
-  $carExample.appendChild($carControlPrev)
-  $carExample.appendChild($carControlNext)
-  var $newCapture = document.createElement('div')
-  $newCapture.setAttribute('id', 'capture')
-  $newCapture.setAttribute('class', 'col-4')
-  $newCapture.appendChild($carExample)
-  var $row = document.querySelector('.row')
-  $row.appendChild($newCapture)
 }
 
 function fetchDescription(parkCode) {
   const $description = document.querySelector('.description')
   var foundObj = findObjByParkCode(parkCode, parkInfo)
   $description.innerText = foundObj.description
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  const $formHolder = document.querySelector('.formholder')
+  var formInfo = $formHolder.textContent
+  var split = formInfo.split('&')
+  var origin = split[0].replace(/%2C/g, ',')
+  var destination = split[1].replace(/%2C/g, ',')
+  var waypoints = split[2].replace(/%2C/g, ',')
+  var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
+  var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
+  var wayArr = []
+  var finalWayArr = []
+  if (waypoints.length !== 10) {
+    var wayStrArr = waypoints.split('%3B')
+    for (let i = 0; i < wayStrArr.length; i++) {
+      var singleWaypoint = wayStrArr[i]
+      var cleanedWay = singleWaypoint.replace(/waypoints=/g, '').split('%20').join(' ')
+      wayArr.push(cleanedWay)
+    }
+    for (let i = 0; i < wayArr.length; i++) {
+      var newObj = new Object
+      newObj['location'] = wayArr[i]
+      newObj['stopover'] = true
+      finalWayArr.push(newObj)
+    }
+  }
+  directionsService.route({
+    origin: finalOrg,
+    destination: finalDest,
+    waypoints: finalWayArr,
+    travelMode: 'DRIVING',
+    optimizeWaypoints: true
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+$('#myform').submit(function(e) {
+  e.preventDefault();
+  const $formHolder = document.querySelector('.formholder')
+  $formHolder.innerHTML = ''
+  $formHolder.append($(this).serialize())
+  const $capture = document.getElementById('capture')
+  var directionsDisplay = new google.maps.DirectionsRenderer
+  var directionsService = new google.maps.DirectionsService
+  var newmap = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 39.5, lng: -98.35},
+    zoom: 5,
+    mapTypeId: 'hybrid'
+  });
+  var kmlLayer = new google.maps.KmlLayer(src, {
+    suppressInfoWindows: true,
+    preserveViewport: false,
+    map: newmap
+  });
+  kmlLayer.addListener('click', function(event) {
+    var content = event.featureData.infoWindowHtml;
+    const $bg = document.querySelector('.parkplaceholder')
+    const $capture = document.getElementById('capture')
+    $bg.innerHTML = content
+    var parkName = $bg.innerText
+    parkFinder(parkName)
+  });
+  directionsDisplay.setMap(newmap);
+  directionsDisplay.setPanel($capture);
+  calculateAndDisplayRoute(directionsService, directionsDisplay)
+})
+
+function calcRoute() {
+  const $formHolder = document.querySelector('.formholder')
+  var formInfo = $formHolder.textContent
+  var split = formInfo.split('&')
+  var origin = split[0]
+  var destination = split[1]
+  var waypoints = split[2]
+  var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
+  var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
+  var finalWay = waypoints.replace(/waypoints=/g, '').split('%20').join(' ')
+  var request = {
+    origin: finalOrg,
+    destination: finalDest,
+    travelMode: 'DRIVING'
+  }
+  console.log(finalOrg)
+  console.log(finalDest)
+  console.log(finalWay)
 }
 
 const parkInfo = [
@@ -658,7 +635,7 @@ const parkInfo = [
     parkCode: 'voya',
     src: ['images/voya/voya1.jpg', 'images/voya/voya2.jpg', 'images/voya/voya3.jpg', 'images/voya/voya4.jpg', 'images/voya/voya5.jpg'],
     LatLng: [ 48.4268554, -92.8465541 ],
-    description: "Voyaguers National Park, MN\n\nVoyageurs National Park lies within the heart of the North American Continent.  Here you can see and touch rocks half as old as the world, experience the life of a voyageur, immerse yourself in the sights and sounds of a boreal forest, view the dark skies, or ply the interconnected water routes."
+    description: "Voyageurs National Park, MN\n\nVoyageurs National Park lies within the heart of the North American Continent.  Here you can see and touch rocks half as old as the world, experience the life of a voyageur, immerse yourself in the sights and sounds of a boreal forest, view the dark skies, or ply the interconnected water routes."
   },
   {
     id: '39',

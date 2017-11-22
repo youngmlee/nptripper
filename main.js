@@ -1,33 +1,33 @@
 /* eslint-disable no-unused-vars */
 
 var map;
-var src='http://gdurl.com/NiZm'
+const src='http://gdurl.com/NiZm'
 
 $(document).ready(function() {
   console.log('Document ready!')
 });
 
 function initMap() {
-  var directionsDisplay = new google.maps.DirectionsRenderer
-  var directionsService = new google.maps.DirectionsService
-  var map = new google.maps.Map(document.getElementById('map'), {
+  const directionsDisplay = new google.maps.DirectionsRenderer
+  const directionsService = new google.maps.DirectionsService
+  const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 39.5, lng: -98.35},
     zoom: 5,
     mapTypeId: 'hybrid'
   });
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
-  var kmlLayer = new google.maps.KmlLayer(src, {
+  const kmlLayer = new google.maps.KmlLayer(src, {
     suppressInfoWindows: true,
     preserveViewport: false,
     map: map
   });
   kmlLayer.addListener('click', function(event) {
-    var content = event.featureData.infoWindowHtml;
+    const content = event.featureData.infoWindowHtml;
     const $bg = document.querySelector('.parkplaceholder')
     const $capture = document.getElementById('capture')
     $bg.innerHTML = content
-    var parkName = $bg.innerText
+    const parkName = $bg.innerText
     parkFinder(parkName)
   });
 }
@@ -211,7 +211,7 @@ function parkFinder (parkName) {
 
 function findObjByParkCode (parkCode, array) {
   for (let i = 0; i < array.length; i++) {
-    var arrObj = array[i]
+    const arrObj = array[i]
     if (parkCode === arrObj.parkCode) {
       return arrObj
     }
@@ -220,7 +220,7 @@ function findObjByParkCode (parkCode, array) {
 
 function findObjByParkName (parkName, array) {
   for (let i = 0; i < array.length; i++) {
-    var arrObj = array[i]
+    const arrObj = array[i]
     if (parkName === arrObj.name) {
       return arrObj
     }
@@ -228,9 +228,9 @@ function findObjByParkName (parkName, array) {
 }
 
 function popCar(parkCode) {
-  var $carousel = document.querySelectorAll('.carousel-inner img')
-  var foundObj = findObjByParkCode(parkCode, parkInfo)
-  var parkSrc = foundObj.src
+  const $carousel = document.querySelectorAll('.carousel-inner img')
+  const foundObj = findObjByParkCode(parkCode, parkInfo)
+  const parkSrc = foundObj.src
   for (let i = 0; i < $carousel.length; i++) {
     $carousel[i].setAttribute('src', parkSrc[i])
   }
@@ -239,7 +239,7 @@ function popCar(parkCode) {
 function fetchDescription(parkCode) {
   const $description = document.querySelector('.description')
   const $blockquote = document.querySelector('.blockquote')
-  var foundObj = findObjByParkCode(parkCode, parkInfo)
+  const foundObj = findObjByParkCode(parkCode, parkInfo)
   $description.innerText = ''
   $description.innerText = foundObj.description
   const $website = document.createElement('a')
@@ -251,24 +251,24 @@ function fetchDescription(parkCode) {
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   const $formHolder = document.querySelector('.formholder')
-  var formInfo = $formHolder.textContent
-  var split = formInfo.split('&')
-  var origin = split[0].replace(/%2C/g, ',')
-  var destination = split[1].replace(/%2C/g, ',')
-  var waypoints = split[2].replace(/%2C/g, ',')
-  var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
-  var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
-  var wayArr = []
-  var finalWayArr = []
+  const formInfo = $formHolder.textContent
+  const split = formInfo.split('&')
+  const origin = split[0].replace(/%2C/g, ',')
+  const destination = split[1].replace(/%2C/g, ',')
+  const waypoints = split[2].replace(/%2C/g, ',')
+  const finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
+  const finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
+  const wayArr = []
+  const finalWayArr = []
   if (waypoints.length !== 10) {
-    var wayStrArr = waypoints.split('%3B')
+    const wayStrArr = waypoints.split('%3B')
     for (let i = 0; i < wayStrArr.length; i++) {
-      var singleWaypoint = wayStrArr[i]
-      var cleanedWay = singleWaypoint.replace(/waypoints=/g, '').split('%20').join(' ')
+      const singleWaypoint = wayStrArr[i]
+      const cleanedWay = singleWaypoint.replace(/waypoints=/g, '').split('%20').join(' ')
       wayArr.push(cleanedWay)
     }
     for (let i = 0; i < wayArr.length; i++) {
-      var newObj = new Object
+      const newObj = new Object
       newObj['location'] = wayArr[i]
       newObj['stopover'] = true
       finalWayArr.push(newObj)
@@ -329,16 +329,16 @@ function getOrgDest () {
   const orgDestArr = []
   const wpFinalArr = []
   const $formHolder = document.querySelector('.formholder')
-  var formInfo = $formHolder.textContent
-  var split = formInfo.split('&')
-  var origin = split[0].replace(/%2C/g, ',')
-  var destination = split[1].replace(/%2C/g, ',')
-  var states = split[3].replace(/%2C/g, ',')
-  var finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
-  var finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
-  var wpArr = states.split('%3B')
+  const formInfo = $formHolder.textContent
+  const split = formInfo.split('&')
+  const origin = split[0].replace(/%2C/g, ',')
+  const destination = split[1].replace(/%2C/g, ',')
+  const states = split[3].replace(/%2C/g, ',')
+  const finalOrg = origin.replace(/origin=/g, '').split('%20').join(' ')
+  const finalDest = destination.replace(/destination=/g, '').split('%20').join(' ')
+  const wpArr = states.split('%3B')
   for (let i = 0; i < wpArr.length; i++) {
-    var wp = wpArr[i].replace(/states=/g, '').split('%20').join(' ')
+    const wp = wpArr[i].replace(/states=/g, '').split('%20').join(' ')
     wpFinalArr.push(wp)
   }
   for (let j = 0; j < wpFinalArr.length; j++) {
@@ -348,9 +348,9 @@ function getOrgDest () {
 }
 
 function calcDistance() {
-  var parkList = []
+  const parkList = []
   var service = new google.maps.DistanceMatrixService;
-  var outputDiv = document.querySelector('.description');
+  const outputDiv = document.querySelector('.description');
   service.getDistanceMatrix({
     origins: getOrgDest(),
     destinations: topParks,
@@ -364,12 +364,12 @@ function calcDistance() {
     } else {
       var originList = response.originAddresses;
       var destinationList = response.destinationAddresses;
-      var outputDiv = document.querySelector('.description');
+      const outputDiv = document.querySelector('.description');
       outputDiv.innerHTML = '';
     }
     for (let i = 0; i < originList.length; i++) {
-      var results = response.rows[i].elements;
-      for (var j = 0; j < results.length; j++) {
+      const results = response.rows[i].elements;
+      for (let j = 0; j < results.length; j++) {
         if (+results[j].distance.text.slice(0, -3) <= 50) {
           outputDiv.innerHTML += 'The distance from ' + originList[i] + ' to ' + destinationList[j] + ' is a mere ' + results[j].distance.text + ' which will take approximately ' + results[j].duration.text + '. A stone\'s throw away!'+ '<br><br>';
           parkList.push(destinationList[j])
@@ -396,8 +396,8 @@ function createGalleries(arr) {
   const outputDiv = document.querySelector('.description')
   const $testingArea = document.querySelector('.testingarea')
   for (let i = 0; i < arr.length; i++) {
-    var singlePark = arr[i]
-    var foundPark = findObjByParkName(singlePark, parkInfo)
+    const singlePark = arr[i]
+    const foundPark = findObjByParkName(singlePark, parkInfo)
     const $lightboxGallery = document.createElement('div')
     $lightboxGallery.setAttribute('class', 'gallery')
     const $a1 = document.createElement('a')
@@ -416,7 +416,12 @@ function createGalleries(arr) {
     $lightboxGallery.appendChild($a3)
     $lightboxGallery.appendChild($a4)
     $lightboxGallery.appendChild($a5)
+    const $npsWebsite = document.createElement('a')
+    $npsWebsite.setAttribute('href', foundPark.website)
+    $npsWebsite.setAttribute('target', '_blank')
+    $npsWebsite.innerText = 'NPS Website'
     outputDiv.appendChild($lightboxGallery)
+    outputDiv.appendChild($npsWebsite)
   }
   $('.gallery').each(function() {
     $(this).magnificPopup({

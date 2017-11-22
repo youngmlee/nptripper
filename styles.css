@@ -17,10 +17,10 @@ a {
 
 h2 {
   padding-top: 0.4%;
-  text-align: center;
   font-family: 'Amatic SC', serif;
   font-size: 5rem;
   color: white;
+  text-align: center;
   text-shadow: 4px 4px 10px black;
 }
 
@@ -29,16 +29,16 @@ h2 {
 }
 
 #map {
+  float: left;
   height: 64vh;
   overflow: hidden;
-  float: left;
   border: thin solid #333;
 }
 
 #capture {
+  float: left;
   height: 64vh;
   overflow: scroll;
-  float: left;
   background-color: #ececfb;
   border: thin solid #333;
   border-left: none;

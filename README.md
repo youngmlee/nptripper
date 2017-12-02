@@ -9,6 +9,3 @@ Nearby national parks suggestions:
 
 Google Maps directions:
 ![Google directions](https://user-images.githubusercontent.com/20914980/33148593-43fbf310-cf81-11e7-823d-0dbd8bdcddbe.png)
-
-Nearby national parks preview:
-![parks preview](https://user-images.githubusercontent.com/20914980/31796374-13984682-b4de-11e7-93d5-1e83bdae7bb8.gif)
